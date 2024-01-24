@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body{
+    
+      font-family: 'italic', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;;
+      margin: 0;
+     
+    }
+
+    #calculator {
+      border: 2px solid #370b0b;
+      border-radius: 8px;
+      padding: 70px;
+      box-shadow: 0 0 10px rgba(65, 6, 25, 0.78);
+      background-image: url(calc2.hd.jpg);
+    }
+
+    input {
+      width: 95%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 19px;
+      
+    }
+
+    button {
+      width: 95px;
+      height: 60px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    
+    }
+  </style>
+</head>
+<body>
+
+<div id="calculator">
+  <input type="text" id="display" disabled>
+  <div>
+    <button onclick="appendValue('1')">1</button>
+    <button onclick="appendValue('2')">2</button>
+    <button onclick="appendValue('3')">3</button>
+    <button onclick="setOperator('+')">+</button>
+  </div>
+  <div>
+    <button onclick="appendValue('4')">4</button>
+    <button onclick="appendValue('5')">5</button>
+    <button onclick="appendValue('6')">6</button>
+    <button onclick="setOperator('-')">-</button>
+  </div>
+  <div>
+    <button onclick="appendValue('7')">7</button>
+    <button onclick="appendValue('8')">8</button>
+    <button onclick="appendValue('9')">9</button>
+    <button onclick="setOperator('*')">*</button>
+  </div>
+  <div>
+    <button onclick="appendValue('0')">0</button>
+    <button onclick="clearDisplay()">C</button>
+    <button onclick="calculateResult()">=</button>
+    <button onclick="setOperator('/')">/</button>
+  </div>
+</div>
+
+<script>
+  let currentInput = '';
+  let currentOperator = '';
+  let display = document.getElementById('display');
+
+  function appendValue(value) {
+    currentInput += value;
+    display.value = currentInput;
+  }
+
+  function setOperator(operator) {
+    currentOperator = operator;
+    currentInput += ' ' + operator + ' ';
+    display.value = currentInput;
+  }
+
+  function clearDisplay() {
+    currentInput = '';
+    currentOperator = '';
+    display.value = '';
+  }
+
+  function calculateResult() {
+    const parts = currentInput.split(' ');
+    const num1 = parseFloat(parts[0]);
+    const operator = parts[1];
+    const num2 = parseFloat(parts[2]);
+
+    if (isNaN(num1) || isNaN(num2)) {
+      display.value = 'Invalid Input';
+      return;
+    }
+
+    switch (operator) {
+      case '+':
+        display.value = num1 + num2;
+        break;
+      case '-':
+        display.value = num1 - num2;
+        break;
+      case '*':
+        display.value = num1 * num2;
+        break;
+      case '/':
+        if (num2 === 0) {
+          display.value = 'Cannot divide by zero';
+        } else {
+          display.value = num1 / num2;
+        }
+        break;
+      default:
+        display.value = 'Invalid Operator';
+    }
+  }
+</script>
+
+</body>
+</html>
